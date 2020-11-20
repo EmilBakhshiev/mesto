@@ -1,0 +1,11 @@
+.galery__card-wrapper{
+    display: flex;
+    height: 79px;
+    align-items: center;
+    justify-content: space-between;
+    /*padding-top: 25px;
+    padding-bottom: 31px;*/
+    max-width: 87.24%;
+    margin: 0 auto;
+    
+}

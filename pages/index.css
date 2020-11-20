@@ -16,4 +16,11 @@
 @import url(../blocks/profile/__button-add/profile__button-add.css);
 /*profile end*/
 
-
+/*galery start*/
+@import url(../blocks/galery/galery.css);
+@import url(../blocks/galery/__card-image/galery__card-image.css);
+@import url(../blocks/galery/__card/galery__card.css);
+@import url(../blocks/galery/__card-wrapper/galery__card-wrapper.css);
+@import url(../blocks/galery/__card-like/galery__card-like.css);
+@import url(../blocks/galery/__card-title/galery__card-title.css)
+/*galery end*/
