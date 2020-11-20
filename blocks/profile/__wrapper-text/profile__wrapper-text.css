@@ -1,0 +1,5 @@
+.profile__wrapper-text{
+    display: flex;
+    flex-direction: column; 
+    padding-top: 27.75px;   
+}

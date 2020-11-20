@@ -1,0 +1,27 @@
+.profile__button-edit{
+    width: 24px;
+    height: 24px;
+    background-color: black;
+    border: 1px solid #FFFFFF;
+    position: relative;
+    padding: 0;
+    box-sizing: border-box;
+    margin-top: 41.75px;
+    margin-right: auto;
+    transition: .4s ease;
+}
+
+.profile__button-edit::before{
+    content:'';
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    display: block;
+    height: 10px;
+    width: 10px;
+    background-image: url(../../../images/button_pen.svg);
+}
+
+.profile__button-edit:hover{
+    opacity: 0.6;
+}
