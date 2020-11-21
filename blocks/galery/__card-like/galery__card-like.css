@@ -10,7 +10,7 @@
     cursor: pointer;
     outline-width: 0;
     flex-shrink: 0;
-    transition: .4s ea; 
+    transition: .4s ease; 
 }
 
 .galery__card-like:hover{

@@ -1,0 +1,17 @@
+.popup__save-button{
+    width: 100%;
+    background-color: black;
+    color: white;
+    border: none;
+    box-sizing: border-box;
+    border-radius: 2px;
+    text-align: center;
+    min-height: 50px;
+    font-size: 18px;
+    line-height: 22px;
+    cursor: pointer;
+}
+
+.popup__save-button:focus{
+    outline: none;
+}
