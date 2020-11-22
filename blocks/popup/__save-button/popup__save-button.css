@@ -10,8 +10,13 @@
     font-size: 18px;
     line-height: 22px;
     cursor: pointer;
+    transition: .4s ease;
 }
 
 .popup__save-button:focus{
     outline: none;
+}
+
+.popup__save-button:hover{
+    opacity: 0.8;
 }
