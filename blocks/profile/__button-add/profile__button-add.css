@@ -9,14 +9,18 @@
     box-sizing: border-box;
     margin-top: 38.75px;
     transition: .4s ease;
+    
 }
 
 .profile__button-add::before{
     content:'';
     position: absolute;
-    top: 14px;
-    left: 64px;
+    top: 28%;
+    left: 42.67%;
     display: block;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     height: 22px;
     width: 22px;
     background-image: url(../../../images/button__add.svg);
@@ -24,4 +28,14 @@
 
 .profile__button-add:hover{
     opacity: 0.6;
+}
+
+
+@media (max-width: 768px){
+    .profile__button-add{
+        width: 88%;
+    }
+    .profile__button-add::before{
+        left: 46.67%;
+    }
 }

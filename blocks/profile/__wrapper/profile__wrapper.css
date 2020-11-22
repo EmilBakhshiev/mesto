@@ -1,3 +1,11 @@
 .profile__wrapper{
     display: flex;
 }
+
+@media (max-width:768px){
+    .profile__wrapper{
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+}

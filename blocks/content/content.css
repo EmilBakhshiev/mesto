@@ -2,3 +2,9 @@
     max-width: 880px;
     margin: 0 auto;
 }
+
+@media (max-width: 879px){
+    .content{
+        width: 90%;
+    }
+}

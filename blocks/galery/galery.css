@@ -1,7 +1,7 @@
 .galery{
     display: grid;
     margin: 0 auto;
-    grid-template-columns: repeat(auto-fit, minmax(282px, 282px));
+    grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
     grid-template-rows: repeat(2, 1fr);
     padding-top: 47.25px;
     column-gap: 17px;
