@@ -39,3 +39,14 @@
         left: 46.67%;
     }
 }
+
+@media (max-width: 425px){
+    .profile__button-add{
+        width: 282px;
+        margin-top: 36px;
+    }
+    .profile__button-add::before{
+        height: 16px;
+        width: 16px;
+    }
+}

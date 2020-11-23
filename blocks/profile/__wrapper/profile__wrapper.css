@@ -1,11 +1,12 @@
 .profile__wrapper{
     display: flex;
+    flex-direction: column;
+    margin-right: auto;
 }
 
 @media (max-width:768px){
     .profile__wrapper{
-        flex-direction: column;
+        margin-right: 0;
         text-align: center;
-        align-items: center;
     }
 }

@@ -1,6 +1,11 @@
 .profile__wrapper-text{
     display: flex;
-    flex-direction: column; 
     padding-top: 27.75px;
-    margin-right: 25px; 
+}
+
+
+@media (max-width: 425px){
+    .profile__wrapper-text{
+        padding-top: 22.25px;
+    }
 }

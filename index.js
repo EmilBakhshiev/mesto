@@ -1,12 +1,12 @@
-const editButton = document.querySelector('.profile__button-edit');
-const closePopupButton = document.querySelector('.popup__close-button');
-const popup = document.querySelector('.popup');
-const likeButton = document.querySelectorAll('.galery__card-like');
-const inputName = document.querySelector('#name');
-const inputAboutMe = document.querySelector('#aboutMe');
-const profileName = document.querySelector('.profile__name');
-const profileAboutMe = document.querySelector('.profile__description');
-const saveButton = document.querySelector('.popup__save-button');
+let editButton = document.querySelector('.profile__button-edit');
+let closePopupButton = document.querySelector('.popup__close-button');
+let popup = document.querySelector('.popup');
+let likeButton = document.querySelectorAll('.galery__card-like');
+let inputName = document.querySelector('#name');
+let inputAboutMe = document.querySelector('#aboutMe');
+let profileName = document.querySelector('.profile__name');
+let profileAboutMe = document.querySelector('.profile__description');
+let saveButton = document.querySelector('.popup__save-button');
 
 // открытие и закрытие popup
 function openClosePopup(){

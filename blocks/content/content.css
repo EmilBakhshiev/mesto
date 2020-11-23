@@ -3,8 +3,14 @@
     margin: 0 auto;
 }
 
-@media (max-width: 879px){
+@media (max-width: 880px){
     .content{
         width: 90%;
+    }
+}
+
+@media (max-width: 425px){
+    .content{
+        width: 282px;
     }
 }
