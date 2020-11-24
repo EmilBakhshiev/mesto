@@ -12,8 +12,8 @@
     width: 40px;
     height: 40px;
     position: absolute;
-    left: 426.72px;
-    bottom: 343.72px;
+    left:100%;
+    bottom:100%;
     transition: .4s ease;
 }
 
@@ -21,12 +21,12 @@
     opacity: 0.6;
 }
 
-@media (max-width: 425px){
+@media (max-width: 480px){
     .popup__close-button{
         width: 26px;
         height: 26px;
-        left: 254px;
-        bottom: 351px;
+        left: 90%;
+        bottom: 105%;
     }
 }
 
