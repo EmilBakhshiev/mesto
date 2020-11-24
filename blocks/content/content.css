@@ -5,12 +5,12 @@
 
 @media (max-width: 880px){
     .content{
-        width: 90%;
+        max-width: 90%;
     }
 }
 
 @media (max-width: 425px){
     .content{
-        width: 282px;
+        max-width: 282px;
     }
 }
