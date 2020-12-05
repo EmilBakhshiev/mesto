@@ -1,5 +1,5 @@
 let editButton = document.querySelector('.profile__button-edit');
-const closePopupButton = document.querySelectorAll('.popup__close-button');
+const closePopupButton = document.querySelector('.popup__close-button');
 let popup = document.querySelector('.popup');
 let likeButton = document.querySelectorAll('.galery__card-like');
 let inputName = document.querySelector('#name');
@@ -9,7 +9,51 @@ let profileAboutMe = document.querySelector('.profile__description');
 let saveButton = document.querySelector('.popup__save-button');
 const addButton = document.querySelector('.profile__button-add');
 const addCardPopup = document.querySelector('#addCardPopup');
+const galeryCardContainer = document.querySelector('.galery');
+const templateCard = document.querySelector('.template');
+const initialCards = [
+    {
+        name: 'Архыз',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+        name: 'Челябинская область',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+        name: 'Иваново',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+        name: 'Камчатка',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+        name: 'Холмогорский район',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+        name: 'Байкал',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    }
+];
 
+//Добавление карточек из шаблона
+    function renderCards(){
+        const listItem = initialCards.map(composeCard);
+        galeryCardContainer.append(...listItem)
+    };
+
+    function composeCard(item){
+        const newCard = templateCard.content.cloneNode(true);
+        const nameCard = newCard.querySelector('.galery__card-title');
+        const imageCard = newCard.querySelector('.galery__card-image');
+        nameCard.textContent = item.name;
+        imageCard.setAttribute('src', item.link);
+        return newCard; 
+    }
+    renderCards()
+    
 // открытие и закрытие popup
 function openClosePopup(){
     popup.classList.toggle('popup_opened');

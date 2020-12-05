@@ -39,6 +39,7 @@
 @import url(../blocks/popup/__close-button/popup__close-button.css);
 @import url(../blocks/popup/__create-button/popup__create-button.css);
 
+@import url(../blocks/template/template.css);
 /*modificator start*/
 @import url(../blocks/popup/_opened/popup_opened.css);
 @import url(../blocks/galery/__card-like/_active/galery__card-like_active.css);
