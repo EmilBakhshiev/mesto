@@ -12,6 +12,9 @@ const addCardPopup = document.querySelector('#addCardPopup');
 const galeryCardContainer = document.querySelector('.galery');
 const templateCard = document.querySelector('.template');
 const closePopupAddCard = document.querySelector('#closeAddPopup');
+const inputPlaceName = document.querySelector('#placeName');
+const inputPlaceImage = document.querySelector('#imageLink');
+const createButton = document.querySelector('.popup__create-button');
 const initialCards = [
     {
         name: 'Архыз',
@@ -39,10 +42,12 @@ const initialCards = [
     }
 ];
 
+console.log(initialCards);
 //Добавление карточек из шаблона
     function renderCards(){
         const listItem = initialCards.map(composeCard);
-        galeryCardContainer.append(...listItem)
+        galeryCardContainer.append(...listItem);
+        
     };
 
     function composeCard(item){
@@ -51,7 +56,15 @@ const initialCards = [
         const imageCard = newCard.querySelector('.galery__card-image');
         nameCard.textContent = item.name;
         imageCard.setAttribute('src', item.link);
-        return newCard; 
+        function onLikeButton(like){
+            like.classList.toggle("galery__card-like_active");
+        }
+        for (let i = 0; i < likeButton.length; i++) {
+        likeButton[i].addEventListener('click', function(e){
+           onLikeButton(e.currentTarget);
+         });
+        };
+        return newCard;
     }
     renderCards()
     
@@ -71,18 +84,19 @@ function openCloseAddCardPopup(){
 }
 closePopupAddCard.addEventListener('click', openCloseAddCardPopup);
 addButton.addEventListener('click', openCloseAddCardPopup);
+createButton.addEventListener('click', openCloseAddCardPopup);
 
 //Активация и деактивация лайков
-function onLikeButton(like){
+/*function onLikeButton(like){
     like.classList.toggle("galery__card-like_active");
 }
 for (let i = 0; i < likeButton.length; i++) {
 likeButton[i].addEventListener('click', function(e){
    onLikeButton(e.currentTarget);
  });
-};
-console.log(onLikeButton);
-//Работа с формой
+};*/
+
+//Работа с формой редактирования профиля
 inputName.value = profileName.textContent;
 inputAboutMe.value = profileAboutMe.textContent;
 
@@ -96,4 +110,21 @@ function formSubmitHandler (evt) {
 }
 
 formElement.addEventListener('submit', formSubmitHandler);
- 
+
+// Добавление новых элементов
+function addNewCard(){
+    const inputTitle = inputPlaceName.value;
+    const newTitleCard = composeCard({ title: inputTitle });
+    galeryCardContainer.prepend(newTitleCard);
+}
+
+
+function placeSubmitHandler (evt) {
+    evt.preventDefault();
+    const newCardTitle = inputPlaceName.value;
+    const newCardImage = inputPlaceImage.value;
+    const newCardItem = composeCard({ name: newCardTitle, link: newCardImage });
+    galeryCardContainer.prepend(newCardItem);
+}
+
+addCardPopup.addEventListener('submit', placeSubmitHandler);
