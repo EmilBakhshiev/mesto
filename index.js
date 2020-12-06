@@ -15,6 +15,7 @@ const closePopupAddCard = document.querySelector('#closeAddPopup');
 const inputPlaceName = document.querySelector('#placeName');
 const inputPlaceImage = document.querySelector('#imageLink');
 const createButton = document.querySelector('.popup__create-button');
+
 const initialCards = [
     {
         name: 'Архыз',
@@ -54,6 +55,9 @@ const initialCards = [
         const imageCard = newCard.querySelector('.galery__card-image');
         nameCard.textContent = item.name;
         imageCard.setAttribute('src', item.link);
+        imageCard.setAttribute('alt', item.name);
+        const removeButton = newCard.querySelector('.galery__card-remove');
+        removeButton.addEventListener('click', removeCard)
         return newCard;   
     }
     renderCards()
@@ -102,13 +106,6 @@ function formSubmitHandler (evt) {
 formElement.addEventListener('submit', formSubmitHandler);
 
 // Добавление новых элементов
-function addNewCard(){
-    const inputTitle = inputPlaceName.value;
-    const newTitleCard = composeCard({ title: inputTitle });
-    galeryCardContainer.prepend(newTitleCard);
-}
-
-
 function placeSubmitHandler (evt) {
     evt.preventDefault();
     const newCardTitle = inputPlaceName.value;
@@ -118,3 +115,10 @@ function placeSubmitHandler (evt) {
 }
 
 addCardPopup.addEventListener('submit', placeSubmitHandler);
+
+//Удаление карточек
+function removeCard(event){
+    const targetElement = event.target;
+    const targetItem = targetElement.closest('.galery__card');
+    targetItem.remove();
+}
