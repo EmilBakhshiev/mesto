@@ -1,6 +1,6 @@
 let editButton = document.querySelector('.profile__button-edit');
 const closePopupButton = document.querySelector('.popup__close-button');
-let popup = document.querySelector('.popup');
+const editPopup = document.querySelector('#editPopup');
 let likeButton = document.querySelectorAll('.galery__card-like');
 let inputName = document.querySelector('#name');
 let inputAboutMe = document.querySelector('#aboutMe');
@@ -11,6 +11,7 @@ const addButton = document.querySelector('.profile__button-add');
 const addCardPopup = document.querySelector('#addCardPopup');
 const galeryCardContainer = document.querySelector('.galery');
 const templateCard = document.querySelector('.template');
+const closePopupAddCard = document.querySelector('#closeAddPopup');
 const initialCards = [
     {
         name: 'Архыз',
@@ -55,25 +56,21 @@ const initialCards = [
     renderCards()
     
 // открытие и закрытие popup
-function openClosePopup(){
-    popup.classList.toggle('popup_opened');
+// Edit popup
+function openCloseEditPopup(){
+    editPopup.classList.toggle('popup_opened');
 }
 
+editButton.addEventListener('click', openCloseEditPopup);
+closePopupButton.addEventListener('click', openCloseEditPopup);
+saveButton.addEventListener('click', openCloseEditPopup);
+
+//AddCard popup
 function openCloseAddCardPopup(){
     addCardPopup.classList.toggle('popup_opened');
 }
-
-editButton.addEventListener('click', openClosePopup);
-/*
-for (let i = 0; i<closePopupButton.length; i++){
-    closePopupButton[i].addEventListener('click', function(evt){
-        openClosePopup(evt.currentTarget);
-      });
-}*/
-closePopupButton.addEventListener('click', openClosePopup);
-saveButton.addEventListener('click', openClosePopup);
+closePopupAddCard.addEventListener('click', openCloseAddCardPopup);
 addButton.addEventListener('click', openCloseAddCardPopup);
-
 
 //Активация и деактивация лайков
 function onLikeButton(like){
@@ -84,8 +81,7 @@ likeButton[i].addEventListener('click', function(e){
    onLikeButton(e.currentTarget);
  });
 };
-
-
+console.log(onLikeButton);
 //Работа с формой
 inputName.value = profileName.textContent;
 inputAboutMe.value = profileAboutMe.textContent;
