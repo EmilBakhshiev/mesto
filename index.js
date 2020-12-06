@@ -42,12 +42,10 @@ const initialCards = [
     }
 ];
 
-console.log(initialCards);
 //Добавление карточек из шаблона
     function renderCards(){
         const listItem = initialCards.map(composeCard);
         galeryCardContainer.append(...listItem);
-        
     };
 
     function composeCard(item){
@@ -56,15 +54,7 @@ console.log(initialCards);
         const imageCard = newCard.querySelector('.galery__card-image');
         nameCard.textContent = item.name;
         imageCard.setAttribute('src', item.link);
-        function onLikeButton(like){
-            like.classList.toggle("galery__card-like_active");
-        }
-        for (let i = 0; i < likeButton.length; i++) {
-        likeButton[i].addEventListener('click', function(e){
-           onLikeButton(e.currentTarget);
-         });
-        };
-        return newCard;
+        return newCard;   
     }
     renderCards()
     
@@ -87,14 +77,14 @@ addButton.addEventListener('click', openCloseAddCardPopup);
 createButton.addEventListener('click', openCloseAddCardPopup);
 
 //Активация и деактивация лайков
-/*function onLikeButton(like){
+function onLikeButton(like){
     like.classList.toggle("galery__card-like_active");
 }
 for (let i = 0; i < likeButton.length; i++) {
 likeButton[i].addEventListener('click', function(e){
    onLikeButton(e.currentTarget);
  });
-};*/
+};
 
 //Работа с формой редактирования профиля
 inputName.value = profileName.textContent;
