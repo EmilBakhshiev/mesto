@@ -26,6 +26,7 @@
     .popup__create-button{
         font-size: 14px;
         line-height: 17px;
-        min-height: 46px;
+        min-height: 40px;
+        max-width: 200px;
     }
 }

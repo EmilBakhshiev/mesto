@@ -14,7 +14,10 @@ const closePopupAddCard = document.querySelector('#closeAddPopup');
 const inputPlaceName = document.querySelector('#placeName');
 const inputPlaceImage = document.querySelector('#imageLink');
 const createButton = document.querySelector('.popup__create-button');
-
+const imagePopup = document.querySelector('#imagePopup');
+const closeButtonimagePopup = document.querySelector('#closeImagePopup');
+const fullSizeImage = document.querySelector('.popup__image'); 
+const imageCaption = document.querySelector('.popup__caption');
 const initialCards = [
     {
         name: 'Архыз',
@@ -59,6 +62,12 @@ const initialCards = [
         nameCard.textContent = item.name;
         imageCard.setAttribute('src', item.link);
         imageCard.setAttribute('alt', item.name);
+        imageCard.addEventListener('click', openCloseImagePopup);
+        imageCard.addEventListener('click', function(){
+            fullSizeImage.setAttribute('src', item.link);
+            imageCaption.textContent = item.name;
+
+        })
         const removeButton = newCard.querySelector('.galery__card-remove');
         removeButton.addEventListener('click', removeCard)
         return newCard;   
@@ -121,3 +130,10 @@ function removeCard(event){
     const targetItem = targetElement.closest('.galery__card');
     targetItem.remove();
 }
+
+//Попап картинки
+function openCloseImagePopup(){
+    imagePopup.classList.toggle('popup_opened');
+}
+
+closeButtonimagePopup.addEventListener('click', openCloseImagePopup);

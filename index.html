@@ -27,15 +27,15 @@
 
     <section class="galery">
       <template class="template">
-      <div class="galery__card">
-        <img src="https://placeholder.com/" alt="" class="galery__card-image">
-        <button class="galery__card-remove"></button>
-        <div class="galery__card-wrapper">
-          <h2 class="galery__card-title"></h2>
-          <button class="galery__card-like" type="submit"></button>
-          
-        </div>
-    </template>
+        <div class="galery__card">
+          <img src="https://placeholder.com/" alt="" class="galery__card-image">
+          <button class="galery__card-remove"></button>
+          <div class="galery__card-wrapper">
+            <h2 class="galery__card-title"></h2>
+            <button class="galery__card-like" type="submit"></button>
+
+          </div>
+      </template>
     </section>
   </main>
   <footer class="footer content">
@@ -53,11 +53,20 @@
   <div class="popup" id="addCardPopup">
     <form class="popup__container">
       <h2 class="popup__title">Новое место</h2>
-      <input type="text" class="popup__input" id="placeName" placeholder="Название" >
+      <input type="text" class="popup__input" id="placeName" placeholder="Название">
       <input type="text" class="popup__input" id="imageLink" placeholder="Ссылка на картинку">
       <button class="popup__create-button" type="submit">Создать</button>
       <button class="popup__close-button" type="button" id="closeAddPopup"></button>
     </form>
+  </div>
+  <div class="popup popup_theme_dark" id="imagePopup">
+    <div class="popup__image-container">
+      <figure class="popup__figure">
+        <img src="/" alt="/" class="popup__image">
+        <figcaption class="popup__caption"></figcaption>
+      </figure>
+      <button class="popup__close-button" type="button" id="closeImagePopup"></button>
+    </div>
   </div>
   <script src="./index.js"></script>
 </body>
