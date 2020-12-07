@@ -1,7 +1,6 @@
 let editButton = document.querySelector('.profile__button-edit');
 const closePopupButton = document.querySelector('.popup__close-button');
 const editPopup = document.querySelector('#editPopup');
-let likeButton = document.querySelectorAll('.galery__card-like');
 let inputName = document.querySelector('#name');
 let inputAboutMe = document.querySelector('#aboutMe');
 let profileName = document.querySelector('.profile__name');
@@ -53,6 +52,10 @@ const initialCards = [
         const newCard = templateCard.content.cloneNode(true);
         const nameCard = newCard.querySelector('.galery__card-title');
         const imageCard = newCard.querySelector('.galery__card-image');
+        const likeButton = newCard.querySelector('.galery__card-like');
+        likeButton.addEventListener('click', function(e){
+            onLikeButton(e.currentTarget);
+        });
         nameCard.textContent = item.name;
         imageCard.setAttribute('src', item.link);
         imageCard.setAttribute('alt', item.name);
@@ -84,11 +87,7 @@ createButton.addEventListener('click', openCloseAddCardPopup);
 function onLikeButton(like){
     like.classList.toggle("galery__card-like_active");
 }
-for (let i = 0; i < likeButton.length; i++) {
-likeButton[i].addEventListener('click', function(e){
-   onLikeButton(e.currentTarget);
- });
-};
+
 
 //Работа с формой редактирования профиля
 inputName.value = profileName.textContent;
