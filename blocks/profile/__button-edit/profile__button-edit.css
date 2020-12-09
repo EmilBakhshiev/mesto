@@ -27,6 +27,7 @@
 
 .profile__button-edit:hover{
     opacity: 0.6;
+    cursor: pointer
 }
 
 @media (max-width: 425px){
