@@ -3,7 +3,6 @@ const popupProfileButtonClose = document.querySelector('#close-edit-popup');
 const editPopup = document.querySelector('#edit-popup');
 const profileName = document.querySelector('.profile__name');
 const profileAboutMe = document.querySelector('.profile__description');
-
 const addButton = document.querySelector('.profile__button-add');
 const addCardPopup = document.querySelector('#add-card-popup');
 const galeryCardContainer = document.querySelector('.galery');
@@ -14,6 +13,7 @@ const imagePopup = document.querySelector('#image-popup');
 const closeButtonimagePopup = document.querySelector('#close-image-popup');
 const fullSizeImage = document.querySelector('.popup__image');
 const imageCaption = document.querySelector('.popup__caption');
+const wrapperPopup = document.querySelector('.popup__wrapper');
 
 //Add card form
 const formAddCard = document.querySelector('#add-card-form');
@@ -57,19 +57,44 @@ function openPopup(popup) {
 }
 
 function closePopup(popup) {
-    popup.classList.remove('popup_opened');
+    popup.classList.remove('popup_opened')
 }
+
+document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Escape') {
+        closePopup(editPopup);
+        closePopup(addCardPopup);
+        closePopup(imagePopup);
+    }
+})
+
+
+function closePopupOnOverlay(evt) {
+    const closeButton = evt.target;
+    if (closeButton.classList.contains('popup')) {
+        closeButton.closest('.popup').classList.remove('popup_opened');
+    }
+}
+
+wrapperPopup.addEventListener('click', closePopupOnOverlay);
+
+
 // Edit popup
 editButton.addEventListener('click', () => {
     openPopup(editPopup);
+    closePopupOnOverlay;
     inputName.value = profileName.textContent;
     inputAboutMe.value = profileAboutMe.textContent;
 });
 popupProfileButtonClose.addEventListener('click', () => closePopup(editPopup));
 
+
 //AddCard popup
 closePopupAddCard.addEventListener('click', () => closePopup(addCardPopup));
-addButton.addEventListener('click', () => openPopup(addCardPopup));
+addButton.addEventListener('click', () => {
+    setButtonState(createButton, false);
+    openPopup(addCardPopup);
+})
 
 //Image popup
 function openImage(item) {
@@ -102,7 +127,7 @@ function showError(form, input) { //показ ошибки
     input.classList.add('popup__input_state_invalid');
 }
 
-function hideError(form, input) {
+function hideError(form, input) { //скрытие ошибки
     const error = form.querySelector(`#${input.id}-error`);
     error.textContent = "";
     input.classList.remove('popup__input_state_invalid');
@@ -118,10 +143,10 @@ function checkInputValidity(form, input) { //проверяет валиднос
 
 function setButtonState(button, isActive) { //Выбирает состояние кнопки
     if (isActive) {
-        button.classList.remove('.popup__button_invalid');
+        button.classList.remove('popup__button_invalid');
         button.disabled = false;
     } else {
-        button.classList.add('.popup__button_invalid');
+        button.classList.add('popup__button_invalid');
         button.disabled = true;
     }
 }
