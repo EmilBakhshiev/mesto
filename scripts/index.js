@@ -13,7 +13,7 @@ const imagePopup = document.querySelector('#image-popup');
 const closeButtonimagePopup = document.querySelector('#close-image-popup');
 const fullSizeImage = document.querySelector('.popup__image');
 const imageCaption = document.querySelector('.popup__caption');
-const wrapperPopup = document.querySelector('.popup__wrapper');
+const root = document.querySelector('.root');
 const formAddCard = document.querySelector('#add-card-form');
 const inputPlaceName = formAddCard.querySelector('#place-name');
 const inputPlaceImage = formAddCard.querySelector('#image-link');
@@ -71,7 +71,7 @@ function closePopupOnOverlay(evt) {
     }
 }
 
-wrapperPopup.addEventListener('click', closePopupOnOverlay);
+root.addEventListener('click', closePopupOnOverlay);
 
 
 // Edit popup
