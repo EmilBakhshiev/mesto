@@ -78,7 +78,6 @@ root.addEventListener('click', closePopupOnOverlay);
 
 editButton.addEventListener('click', () => {
     openPopup(editPopup);
-    closePopupOnOverlay;
     inputName.value = profileName.textContent;
     inputAboutMe.value = profileAboutMe.textContent;
 });
@@ -88,7 +87,7 @@ popupProfileButtonClose.addEventListener('click', () => closePopup(editPopup));
 //AddCard popup
 closePopupAddCard.addEventListener('click', () => closePopup(addCardPopup));
 addButton.addEventListener('click', () => {
-    setButtonState(createButton, false, validationConfig);
+    setButtonState(createButton, formAddCard.checkValidity(), validationConfig);
     openPopup(addCardPopup);
 })
 
@@ -108,7 +107,7 @@ function onLikeButton(event) {
 
 //Работа с формой редактирования профиля
 
-function handleFormSubmitProfile(evt) {
+function handleFormSubmitProfile() {
     profileName.textContent = inputName.value;
     profileAboutMe.textContent = inputAboutMe.value;
     closePopup(editPopup);
@@ -125,12 +124,6 @@ function handlePlaceSubmitAddCard() {
     formAddCard.reset();
 }
 
-function handlerEnterBtn(evt) { //добавление карточек через Enter
-    if (evt.key === 'Enter') {
-        handlePlaceSubmitAddCard;
-    }
-}
-formAddCard.addEventListener('keydown', handlerEnterBtn);
 formAddCard.addEventListener('submit', handlePlaceSubmitAddCard);
 
 //Удаление карточек
