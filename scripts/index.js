@@ -70,8 +70,7 @@ function closePopupOnOverlay(evt) {
         closeButton.closest('.popup').classList.remove('popup_opened');
     }
 }
-
-root.addEventListener('click', closePopupOnOverlay);
+document.addEventListener('click', closePopupOnOverlay);
 
 
 // Edit popup
