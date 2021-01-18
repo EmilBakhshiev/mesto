@@ -1,5 +1,5 @@
 import Card from './Card.js';
-import {initialCards} from './initial-сards.js';
+import { initialCards } from './initial-сards.js';
 
 
 
@@ -27,11 +27,11 @@ const inputAboutMe = formEditProfile.querySelector('#about-me');
 
 //Добавление карточек из шаблона
 
-initialCards.forEach((item) =>{
+initialCards.forEach((item) => {
     const card = new Card(item, 'template', openImage);
     const cardElements = card.composeCard();
     galeryCardContainer.append(cardElements);
- })
+})
 
 // открытие и закрытие popup
 
@@ -88,7 +88,7 @@ function openImage(item) {
 };
 closeButtonimagePopup.addEventListener('click', () => closePopup(imagePopup));
 
- 
+
 
 //Работа с формой редактирования профиля
 
@@ -103,21 +103,11 @@ formEditProfile.addEventListener('submit', handleFormSubmitProfile);
 function handlePlaceSubmitAddCard() {
     const newCardTitle = inputPlaceName.value;
     const newCardImage = inputPlaceImage.value;
-    const newCardItem = composeCard({ name: newCardTitle, link: newCardImage });
+    const card = new Card ({name: newCardTitle, link: newCardImage}, 'template', openImage);
+    const newCardItem = card.composeCard();
     galeryCardContainer.prepend(newCardItem);
     closePopup(addCardPopup);
     formAddCard.reset();
 }
 
-function handlerEnterBtn(evt) { //добавление карточек через Enter
-    if (evt.key === 'Enter') {
-        handlePlaceSubmitAddCard;
-    }
-}
-formAddCard.addEventListener('keydown', handlerEnterBtn);
 formAddCard.addEventListener('submit', handlePlaceSubmitAddCard);
-/*
-//Удаление карточек
-function removeCard(event) {
-    event.target.closest('.galery__card').remove();
-}*/
