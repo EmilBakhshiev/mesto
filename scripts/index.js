@@ -1,7 +1,7 @@
 import Card from './Card.js';
 import { initialCards } from './initial-сards.js';
 import Validation from './FormValidator.js';
-import {validationConfig} from './validationConfig.js';
+import { validationConfig } from './validationConfig.js';
 
 const editButton = document.querySelector('.profile__button-edit');
 const popupProfileButtonClose = document.querySelector('#close-edit-popup');
@@ -16,7 +16,7 @@ const imagePopup = document.querySelector('#image-popup');
 const closeButtonimagePopup = document.querySelector('#close-image-popup');
 const fullSizeImage = document.querySelector('.popup__image');
 const imageCaption = document.querySelector('.popup__caption');
-const root = document.querySelector('.root');
+const wrapperPopup = document.querySelector('.popup__wrapper');
 const formAddCard = document.querySelector('#add-card-form');
 const inputPlaceName = formAddCard.querySelector('#place-name');
 const inputPlaceImage = formAddCard.querySelector('#image-link');
@@ -28,9 +28,8 @@ const inputAboutMe = formEditProfile.querySelector('#about-me');
 const addFormValidationForm = new Validation(validationConfig, formAddCard);
 const editProfileFormValidationForm = new Validation(validationConfig, formEditProfile);
 
-console.log(editProfileFormValidationForm);
 //Добавление карточек из шаблона
-initialCards.forEach((item) => {  
+initialCards.forEach((item) => {
     const card = new Card(item, 'template', openImage);
     const cardElements = card.composeCard();
     galeryCardContainer.append(cardElements);
@@ -60,13 +59,15 @@ function closePopupOnOverlay(evt) {
         closeButton.closest('.popup').classList.remove('popup_opened');
     }
 }
-document.addEventListener('click', closePopupOnOverlay);
+
+wrapperPopup.addEventListener('click', closePopupOnOverlay);
 
 
 // Edit popup
 
 editButton.addEventListener('click', () => {
     openPopup(editPopup);
+    closePopupOnOverlay;
     inputName.value = profileName.textContent;
     inputAboutMe.value = profileAboutMe.textContent;
     editProfileFormValidationForm.enableValidation();
@@ -77,11 +78,7 @@ popupProfileButtonClose.addEventListener('click', () => closePopup(editPopup));
 //AddCard popup
 closePopupAddCard.addEventListener('click', () => closePopup(addCardPopup));
 addButton.addEventListener('click', () => {
-<<<<<<< HEAD
-    setButtonState(createButton, formAddCard.checkValidity(), validationConfig);
-=======
     addFormValidationForm.enableValidation();
->>>>>>> refactor
     openPopup(addCardPopup);
 })
 
@@ -109,7 +106,7 @@ formEditProfile.addEventListener('submit', handleFormSubmitProfile);
 function handlePlaceSubmitAddCard() {
     const newCardTitle = inputPlaceName.value;
     const newCardImage = inputPlaceImage.value;
-    const card = new Card ({name: newCardTitle, link: newCardImage}, 'template', openImage);
+    const card = new Card({ name: newCardTitle, link: newCardImage }, 'template', openImage);
     const newCardItem = card.composeCard();
     galeryCardContainer.prepend(newCardItem);
     closePopup(addCardPopup);
