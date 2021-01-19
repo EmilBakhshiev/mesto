@@ -1,3 +1,8 @@
+import Card from './Card.js';
+import { initialCards } from './initial-сards.js';
+import Validation from './FormValidator.js';
+import {validationConfig} from './validationConfig.js';
+
 const editButton = document.querySelector('.profile__button-edit');
 const popupProfileButtonClose = document.querySelector('#close-edit-popup');
 const editPopup = document.querySelector('#edit-popup');
@@ -6,9 +11,7 @@ const profileAboutMe = document.querySelector('.profile__description');
 const addButton = document.querySelector('.profile__button-add');
 const addCardPopup = document.querySelector('#add-card-popup');
 const galeryCardContainer = document.querySelector('.galery');
-const templateCard = document.querySelector('template');
 const closePopupAddCard = document.querySelector('#close-add-popup');
-const createButton = document.querySelector('.popup__create-button');
 const imagePopup = document.querySelector('#image-popup');
 const closeButtonimagePopup = document.querySelector('#close-image-popup');
 const fullSizeImage = document.querySelector('.popup__image');
@@ -21,30 +24,17 @@ const formEditProfile = document.querySelector('#edit-profile-form');
 const inputName = formEditProfile.querySelector('#name');
 const inputAboutMe = formEditProfile.querySelector('#about-me');
 
+//Валидация форм
+const addFormValidationForm = new Validation(validationConfig, formAddCard);
+const editProfileFormValidationForm = new Validation(validationConfig, formEditProfile);
 
+console.log(editProfileFormValidationForm);
 //Добавление карточек из шаблона
-function renderCards() { //рендеринг карточек
-    const listItem = initialCards.map(composeCard);
-    galeryCardContainer.append(...listItem);
-};
-
-function composeCard(item) { //сборка карточки
-    const newCard = templateCard.content.cloneNode(true);
-    const nameCard = newCard.querySelector('.galery__card-title');
-    const imageCard = newCard.querySelector('.galery__card-image');
-    const likeButton = newCard.querySelector('.galery__card-like');
-    likeButton.addEventListener('click', onLikeButton);
-    nameCard.textContent = item.name;
-    imageCard.src = item.link;
-    imageCard.alt = item.name;
-    imageCard.addEventListener('click', function () {
-        openImage(item);
-    });
-    const removeButton = newCard.querySelector('.galery__card-remove');
-    removeButton.addEventListener('click', removeCard);
-    return newCard;
-}
-renderCards();
+initialCards.forEach((item) => {  
+    const card = new Card(item, 'template', openImage);
+    const cardElements = card.composeCard();
+    galeryCardContainer.append(cardElements);
+})
 
 // открытие и закрытие popup
 
@@ -79,6 +69,7 @@ editButton.addEventListener('click', () => {
     openPopup(editPopup);
     inputName.value = profileName.textContent;
     inputAboutMe.value = profileAboutMe.textContent;
+    editProfileFormValidationForm.enableValidation();
 });
 popupProfileButtonClose.addEventListener('click', () => closePopup(editPopup));
 
@@ -86,7 +77,11 @@ popupProfileButtonClose.addEventListener('click', () => closePopup(editPopup));
 //AddCard popup
 closePopupAddCard.addEventListener('click', () => closePopup(addCardPopup));
 addButton.addEventListener('click', () => {
+<<<<<<< HEAD
     setButtonState(createButton, formAddCard.checkValidity(), validationConfig);
+=======
+    addFormValidationForm.enableValidation();
+>>>>>>> refactor
     openPopup(addCardPopup);
 })
 
@@ -99,10 +94,7 @@ function openImage(item) {
 };
 closeButtonimagePopup.addEventListener('click', () => closePopup(imagePopup));
 
-//Активация и деактивация лайков
-function onLikeButton(event) {
-    event.target.classList.toggle('galery__card-like_active');
-}
+
 
 //Работа с формой редактирования профиля
 
@@ -117,15 +109,11 @@ formEditProfile.addEventListener('submit', handleFormSubmitProfile);
 function handlePlaceSubmitAddCard() {
     const newCardTitle = inputPlaceName.value;
     const newCardImage = inputPlaceImage.value;
-    const newCardItem = composeCard({ name: newCardTitle, link: newCardImage });
+    const card = new Card ({name: newCardTitle, link: newCardImage}, 'template', openImage);
+    const newCardItem = card.composeCard();
     galeryCardContainer.prepend(newCardItem);
     closePopup(addCardPopup);
     formAddCard.reset();
 }
 
 formAddCard.addEventListener('submit', handlePlaceSubmitAddCard);
-
-//Удаление карточек
-function removeCard(event) {
-    event.target.closest('.galery__card').remove();
-}
