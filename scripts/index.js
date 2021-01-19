@@ -1,7 +1,7 @@
 import Card from './Card.js';
 import { initialCards } from './initial-сards.js';
-
-
+import Validation from './FormValidator.js';
+import {validationConfig} from './validationConfig.js';
 
 const editButton = document.querySelector('.profile__button-edit');
 const popupProfileButtonClose = document.querySelector('#close-edit-popup');
@@ -12,7 +12,6 @@ const addButton = document.querySelector('.profile__button-add');
 const addCardPopup = document.querySelector('#add-card-popup');
 const galeryCardContainer = document.querySelector('.galery');
 const closePopupAddCard = document.querySelector('#close-add-popup');
-const createButton = document.querySelector('.popup__create-button');
 const imagePopup = document.querySelector('#image-popup');
 const closeButtonimagePopup = document.querySelector('#close-image-popup');
 const fullSizeImage = document.querySelector('.popup__image');
@@ -25,9 +24,13 @@ const formEditProfile = document.querySelector('#edit-profile-form');
 const inputName = formEditProfile.querySelector('#name');
 const inputAboutMe = formEditProfile.querySelector('#about-me');
 
-//Добавление карточек из шаблона
+//Валидация форм
+const addFormValidationForm = new Validation(validationConfig, formAddCard);
+const editProfileFormValidationForm = new Validation(validationConfig, formEditProfile);
 
-initialCards.forEach((item) => {
+console.log(editProfileFormValidationForm);
+//Добавление карточек из шаблона
+initialCards.forEach((item) => {  
     const card = new Card(item, 'template', openImage);
     const cardElements = card.composeCard();
     galeryCardContainer.append(cardElements);
@@ -68,6 +71,7 @@ editButton.addEventListener('click', () => {
     closePopupOnOverlay;
     inputName.value = profileName.textContent;
     inputAboutMe.value = profileAboutMe.textContent;
+    editProfileFormValidationForm.enableValidation();
 });
 popupProfileButtonClose.addEventListener('click', () => closePopup(editPopup));
 
@@ -75,7 +79,7 @@ popupProfileButtonClose.addEventListener('click', () => closePopup(editPopup));
 //AddCard popup
 closePopupAddCard.addEventListener('click', () => closePopup(addCardPopup));
 addButton.addEventListener('click', () => {
-    setButtonState(createButton, formAddCard.checkValidity(), validationConfig);
+    addFormValidationForm.enableValidation();
     openPopup(addCardPopup);
 })
 
@@ -92,7 +96,7 @@ closeButtonimagePopup.addEventListener('click', () => closePopup(imagePopup));
 
 //Работа с формой редактирования профиля
 
-function handleFormSubmitProfile(evt) {
+function handleFormSubmitProfile() {
     profileName.textContent = inputName.value;
     profileAboutMe.textContent = inputAboutMe.value;
     closePopup(editPopup);
