@@ -16,7 +16,7 @@ const imagePopup = document.querySelector('#image-popup');
 const closeButtonimagePopup = document.querySelector('#close-image-popup');
 const fullSizeImage = document.querySelector('.popup__image');
 const imageCaption = document.querySelector('.popup__caption');
-const wrapperPopup = document.querySelector('.popup__wrapper');
+const wrapperPopup = document.querySelector('.root');
 const formAddCard = document.querySelector('#add-card-form');
 const inputPlaceName = formAddCard.querySelector('#place-name');
 const inputPlaceImage = formAddCard.querySelector('#image-link');
@@ -71,6 +71,7 @@ editButton.addEventListener('click', () => {
     inputName.value = profileName.textContent;
     inputAboutMe.value = profileAboutMe.textContent;
     editProfileFormValidationForm.enableValidation();
+    console.log(editButton);
 });
 popupProfileButtonClose.addEventListener('click', () => closePopup(editPopup));
 
