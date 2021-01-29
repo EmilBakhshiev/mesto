@@ -2,16 +2,16 @@ import Card from './Card.js';
 import { initialCards } from './initial-сards.js';
 import Validation from './FormValidator.js';
 import { validationConfig } from './validationConfig.js';
+import Popup from './Popup.js';
+import PopupWithImage from './PopupWithImage.js';
 
 const editButton = document.querySelector('.profile__button-edit');
-const popupProfileButtonClose = document.querySelector('#close-edit-popup');
 const editPopup = document.querySelector('#edit-popup');
 const profileName = document.querySelector('.profile__name');
 const profileAboutMe = document.querySelector('.profile__description');
 const addButton = document.querySelector('.profile__button-add');
 const addCardPopup = document.querySelector('#add-card-popup');
 const galeryCardContainer = document.querySelector('.galery');
-const closePopupAddCard = document.querySelector('#close-add-popup');
 const imagePopup = document.querySelector('#image-popup');
 const closeButtonimagePopup = document.querySelector('#close-image-popup');
 const fullSizeImage = document.querySelector('.popup__image');
@@ -29,29 +29,20 @@ const addFormValidationForm = new Validation(validationConfig, formAddCard);
 const editProfileFormValidationForm = new Validation(validationConfig, formEditProfile);
 
 //Добавление карточек из шаблона
+
 initialCards.forEach((item) => {
     const card = new Card(item, 'template', openImage);
     const cardElements = card.composeCard();
     galeryCardContainer.append(cardElements);
 })
 
-// открытие и закрытие popup
+//Создание нового экземпляра попапов
+const classAddCard = new Popup(addCardPopup); //Модалка Добавление карточек
+classAddCard.setEventListeners();
 
-function openPopup(popup) {
-    popup.classList.add('popup_opened');
-    document.addEventListener('keydown', closePopupOnEscBtn);
-}
+const editProfile = new Popup(editPopup); //Модалка редактирования профиля
+editProfile.setEventListeners();
 
-function closePopup(popup) {
-    popup.classList.remove('popup_opened');
-    document.removeEventListener('keydown', closePopupOnEscBtn);
-}
-
-function closePopupOnEscBtn(evt) {
-    if (evt.key === 'Escape') {
-        closePopup(document.querySelector('.popup_opened'));
-    };
-};
 
 function closePopupOnOverlay(evt) {
     const closeButton = evt.target;
@@ -66,30 +57,30 @@ wrapperPopup.addEventListener('click', closePopupOnOverlay);
 // Edit popup
 
 editButton.addEventListener('click', () => {
-    openPopup(editPopup);
+    editProfile.open();
+    console.log(editProfile);
     closePopupOnOverlay;
     inputName.value = profileName.textContent;
     inputAboutMe.value = profileAboutMe.textContent;
     editProfileFormValidationForm.enableValidation();
-    console.log(editButton);
+    
 });
-popupProfileButtonClose.addEventListener('click', () => closePopup(editPopup));
 
-
-//AddCard popup
-closePopupAddCard.addEventListener('click', () => closePopup(addCardPopup));
 addButton.addEventListener('click', () => {
     addFormValidationForm.enableValidation();
-    openPopup(addCardPopup);
+    classAddCard.open();
 })
 
 //Image popup
+const classImagePopup = new PopupWithImage(imagePopup);
+console.log(classImagePopup);
+/*
 function openImage(item) {
     fullSizeImage.src = item.link;
     fullSizeImage.alt = item.name;
     imageCaption.textContent = item.name;
     openPopup(imagePopup);
-};
+};*/
 closeButtonimagePopup.addEventListener('click', () => closePopup(imagePopup));
 
 
@@ -99,7 +90,7 @@ closeButtonimagePopup.addEventListener('click', () => closePopup(imagePopup));
 function handleFormSubmitProfile() {
     profileName.textContent = inputName.value;
     profileAboutMe.textContent = inputAboutMe.value;
-    closePopup(editPopup);
+    editProfile.close();
 }
 formEditProfile.addEventListener('submit', handleFormSubmitProfile);
 
@@ -110,7 +101,7 @@ function handlePlaceSubmitAddCard() {
     const card = new Card({ name: newCardTitle, link: newCardImage }, 'template', openImage);
     const newCardItem = card.composeCard();
     galeryCardContainer.prepend(newCardItem);
-    closePopup(addCardPopup);
+    classAddCard.close();
     formAddCard.reset();
 }
 
