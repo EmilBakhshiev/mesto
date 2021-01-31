@@ -1,0 +1,19 @@
+{
+  "name": "yandex_praktikum_mesto",
+  "version": "0.0.1",
+  "description": "Проект описывает какими необычными красотами и обладает Россия, которую мы так плохо знаем. Через фотографии пользователей мы хотим показать места, красоту, которых нельзя ставить под сомнения.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EmilBakhshiev/mesto.git"
+  },
+  "author": "Emil Bakhshyev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EmilBakhshiev/mesto/issues"
+  },
+  "homepage": "https://github.com/EmilBakhshiev/mesto#readme"
+}
