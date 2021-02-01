@@ -97,17 +97,18 @@ formEditProfile.addEventListener('submit', handleFormSubmitProfile);
 
 // Добавление новых карточек
 
-const form = new PopupWithForm({
-    popupSelector: addCardPopup,
+const formAddInstance = new PopupWithForm(addCardPopup, {
     handleFormSubmit: (formData) => {
-        const card = new Card({ name: formData, link: formData.link }, 'template', (item) => {
+        const newCard = new Card(formData, 'template', (item) => {
             classImagePopup.open(item)
         });
-        const newCardItem = card.composeCard();
-        galeryCardContainer.prepend(newCardItem);
+        const cardElement = newCard.composeCard();
+        section.addItem(cardElement);
+        
     }
 })
-form.setEventListeners();
+formAddInstance.setEventListeners();
+console.log(formAddInstance._form);
 /*
 function handlePlaceSubmitAddCard() {
     const newCardTitle = inputPlaceName.value;
@@ -121,4 +122,4 @@ function handlePlaceSubmitAddCard() {
     formAddCard.reset();
 }*/
 
-//formAddCard.addEventListener('submit', handlePlaceSubmitAddCard);
+

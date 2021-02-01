@@ -34,7 +34,7 @@ export default class Card{
             this._onLikeButton();
         })
         this._element.querySelector('.galery__card-image').addEventListener('click',()=>{ //Открытие модального окна карточки
-            this._openImage({name: this._name, link: this._link});
+            this._handleCardClick({name: this._name, link: this._link});
         })
     }
     _removeEventListeners(){
@@ -45,7 +45,7 @@ export default class Card{
             this._onLikeButton();
         })
         this._element.querySelector('.galery__card-image').removeEventListener('click',()=>{ //Открытие модального окна карточки
-            this._openImage({name: this._name, link: this._link});
+            this._handleCardClick({name: this._name, link: this._link});
         })
     }
     _removeCard() {
