@@ -99,16 +99,17 @@ formEditProfile.addEventListener('submit', handleFormSubmitProfile);
 
 const formAddInstance = new PopupWithForm(addCardPopup, {
     handleFormSubmit: (formData) => {
-        const newCard = new Card(formData, 'template', (item) => {
-            classImagePopup.open(item)
+        const newCard = new Card(formData, 'template', (formData) => {
+            classImagePopup.open(formData)
+            
         });
+        console.log(formAddInstance._getInputValues());
         const cardElement = newCard.composeCard();
         section.addItem(cardElement);
         
     }
 })
 formAddInstance.setEventListeners();
-console.log(formAddInstance._form);
 /*
 function handlePlaceSubmitAddCard() {
     const newCardTitle = inputPlaceName.value;
