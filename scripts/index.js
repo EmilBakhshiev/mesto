@@ -6,6 +6,7 @@ import Popup from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
 
 const editButton = document.querySelector('.profile__button-edit');
 const editPopup = document.querySelector('#edit-popup');
@@ -16,8 +17,6 @@ const addCardPopup = document.querySelector('#add-card-popup');
 const galeryCardContainer = '.galery';
 const imagePopup = document.querySelector('#image-popup');
 const closeButtonimagePopup = document.querySelector('#close-image-popup');
-/*const fullSizeImage = document.querySelector('.popup__image');
-const imageCaption = document.querySelector('.popup__caption');*/
 const wrapperPopup = document.querySelector('.root');
 const formAddCard = document.querySelector('#add-card-form');
 const inputPlace = formAddCard.querySelector('#place-name');
@@ -70,8 +69,8 @@ wrapperPopup.addEventListener('click', closePopupOnOverlay);
 editButton.addEventListener('click', () => {
     editProfile.open();
     closePopupOnOverlay;
-    inputName.value = profileName.textContent;
-    inputAboutMe.value = profileAboutMe.textContent;
+   /* inputName.value = profileName.textContent;
+    inputAboutMe.value = profileAboutMe.textContent;*/
     editProfileFormValidationForm.enableValidation();
 
 });
@@ -84,16 +83,33 @@ addButton.addEventListener('click', () => {
 
 closeButtonimagePopup.addEventListener('click', () => closePopup(imagePopup));
 
+const userInfo = new UserInfo({
+    userNameSelector: profileName, 
+    userDescriptionSelector: profileAboutMe
+})
 
+const profileForm = new PopupWithForm(editPopup, {
+    handleFormSubmit: (formData) =>{
+        userInfo.setUserInfo({
+            newUser: formData.name,
+            newDescription: formData.info
+            
+        })
+        console.log(formData);
+    }
+})
+profileForm.setEventListeners();
 
 //Работа с формой редактирования профиля
 
+
+/*
 function handleFormSubmitProfile() {
     profileName.textContent = inputName.value;
     profileAboutMe.textContent = inputAboutMe.value;
     editProfile.close();
-}
-formEditProfile.addEventListener('submit', handleFormSubmitProfile);
+}*/
+//formEditProfile.addEventListener('submit', handleFormSubmitProfile);
 
 // Добавление новых карточек
 
@@ -101,26 +117,9 @@ const formAddInstance = new PopupWithForm(addCardPopup, {
     handleFormSubmit: (formData) => {
         const newCard = new Card(formData, 'template', (formData) => {
             classImagePopup.open(formData)
-            
         });
-        console.log(formAddInstance._getInputValues());
         const cardElement = newCard.composeCard();
         section.addItem(cardElement);
-        
     }
 })
 formAddInstance.setEventListeners();
-/*
-function handlePlaceSubmitAddCard() {
-    const newCardTitle = inputPlaceName.value;
-    const newCardImage = inputPlaceImage.value;
-    const card = new Card({ name: newCardTitle, link: newCardImage }, 'template', (item) => {
-        classImagePopup.open(item)
-    });
-    const newCardItem = card.composeCard();
-    galeryCardContainer.prepend(newCardItem);
-    classAddCard.close();
-    formAddCard.reset();
-}*/
-
-
