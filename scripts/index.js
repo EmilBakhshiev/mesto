@@ -16,11 +16,8 @@ const addButton = document.querySelector('.profile__button-add');
 const addCardPopup = document.querySelector('#add-card-popup');
 const galeryCardContainer = '.galery';
 const imagePopup = document.querySelector('#image-popup');
-const closeButtonimagePopup = document.querySelector('#close-image-popup');
 const wrapperPopup = document.querySelector('.root');
 const formAddCard = document.querySelector('#add-card-form');
-const inputPlaceName = formAddCard.querySelector('#place-name');
-const inputPlaceImage = formAddCard.querySelector('#image-link');
 const formEditProfile = document.querySelector('#edit-profile-form');
 const inputName = formEditProfile.querySelector('#name');
 const inputAboutMe = formEditProfile.querySelector('#about-me');
@@ -64,78 +61,47 @@ function closePopupOnOverlay(evt) {
 wrapperPopup.addEventListener('click', closePopupOnOverlay);
 
 
-// Edit popup
+//Работа с формой редактирования профиля
 
-editButton.addEventListener('click', () => {
+editButton.addEventListener('click', () => { //Обработчик событий кнопки редактирования профиля
     editProfile.open();
+    const infoUser = userInfo.getUserInfo();
+    inputName.value = infoUser.userName;
+    inputAboutMe.value = infoUser.aboutMe;
     closePopupOnOverlay;
-   /* inputName.value = profileName.textContent;
-    inputAboutMe.value = profileAboutMe.textContent;*/
     editProfileFormValidationForm.enableValidation();
 
 });
 
-addButton.addEventListener('click', () => {
-    addFormValidationForm.enableValidation();
-    classAddCard.open();
-})
-
-
-closeButtonimagePopup.addEventListener('click', () => closePopup(imagePopup));
-
 const userInfo = new UserInfo({
-    userNameSelector: profileName, 
+    userNameSelector: profileName,
     userDescriptionSelector: profileAboutMe
 })
 
 const profileForm = new PopupWithForm(editPopup, {
-    handleFormSubmit: (formData) =>{
+    handleFormSubmit: (formData) => {
         userInfo.setUserInfo({
             newUser: formData.name,
             newDescription: formData.info
-            
         })
-        console.log(formData);
     }
 })
 profileForm.setEventListeners();
 
-//Работа с формой редактирования профиля
-
-
-/*
-function handleFormSubmitProfile() {
-    profileName.textContent = inputName.value;
-    profileAboutMe.textContent = inputAboutMe.value;
-    editProfile.close();
-}*/
-//formEditProfile.addEventListener('submit', handleFormSubmitProfile);
-
 // Добавление новых карточек
 
-const formAddInstance = new PopupWithForm(addCardPopup, {
+addButton.addEventListener('click', () => { //Обработчик событий кнопки добавления карточек
+    addFormValidationForm.enableValidation();
+    classAddCard.open();
+})
+
+const formAddInstance = new PopupWithForm(addCardPopup, { 
     handleFormSubmit: (formData) => {
         const newCard = new Card(formData, 'template', (formData) => {
             classImagePopup.open(formData)
         });
         const cardElement = newCard.composeCard();
         section.addItem(cardElement);
-        console.log(formAddInstance._getInputValues());
     }
 })
 formAddInstance.setEventListeners();
-
-/*
-function handlePlaceSubmitAddCard() {
-    const newCardTitle = inputPlaceName.value;
-    const newCardImage = inputPlaceImage.value;
-    const card = new Card({ name: newCardTitle, link: newCardImage }, 'template', (item) => {
-        classImagePopup.open(item)
-    });
-    const newCardItem = card.composeCard();
-    galeryCardContainer.prepend(newCardItem);
-    classAddCard.close();
-    formAddCard.reset();
-}*/
-
-
