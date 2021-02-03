@@ -20,7 +20,7 @@ const closeButtonimagePopup = document.querySelector('#close-image-popup');
 const imageCaption = document.querySelector('.popup__caption');*/
 const wrapperPopup = document.querySelector('.root');
 const formAddCard = document.querySelector('#add-card-form');
-const inputPlace = formAddCard.querySelector('#place-name');
+const inputPlaceName = formAddCard.querySelector('#place-name');
 const inputPlaceImage = formAddCard.querySelector('#image-link');
 const formEditProfile = document.querySelector('#edit-profile-form');
 const inputName = formEditProfile.querySelector('#name');
@@ -104,11 +104,11 @@ const formAddInstance = new PopupWithForm(addCardPopup, {
         });
         const cardElement = newCard.composeCard();
         section.addItem(cardElement);
-        
+        console.log(formAddInstance._getInputValues());
     }
 })
 formAddInstance.setEventListeners();
-console.log(formAddInstance._form);
+
 /*
 function handlePlaceSubmitAddCard() {
     const newCardTitle = inputPlaceName.value;
