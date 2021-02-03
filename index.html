@@ -46,13 +46,13 @@
         <div class="popup" id="edit-popup">
             <form class="popup__container" name="edit-profile-form" id="edit-profile-form" novalidate>
                 <h2 class="popup__title">Редактирование профиля</h2>
-                <input type="text" class="popup__input" id="name" 
+                <input type="text" class="popup__input" name="name" id="name" 
                 required
                 minlength="2"
                 maxlength="40"
                 >
                 <span id="name-error" class="error"></span>
-                <input type="text" class="popup__input" id="about-me"
+                <input type="text" class="popup__input" name="info" id="about-me"
                 required
                 minlength="2"
                 maxlength="200"
@@ -65,13 +65,13 @@
         <div class="popup" id="add-card-popup">
             <form class="popup__container" name="add-card-form" id="add-card-form" novalidate>
                 <h2 class="popup__title">Новое место</h2>
-                <input type="text" class="popup__input" id="place-name" placeholder="Название"
+                <input type="text" class="popup__input" name="name" id="place-name" placeholder="Название"
                 required
                 minlength="2"
                 maxlength="30"
                 >
                 <span id="place-name-error" class="error"></span>
-                <input type="url" class="popup__input" id="image-link" placeholder="Ссылка на картинку"
+                <input type="url" class="popup__input" name="link" id="image-link" placeholder="Ссылка на картинку"
                 required
                 >
                 <span id="image-link-error" class="error"></span>
