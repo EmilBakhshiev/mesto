@@ -93,9 +93,7 @@ const profileForm = new PopupWithForm(editPopup, {
         userInfo.setUserInfo({
             newUser: formData.name,
             newDescription: formData.info
-            
         })
-        console.log(formData);
     }
 })
 profileForm.setEventListeners();
