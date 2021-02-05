@@ -37,20 +37,9 @@ export default class Card{
             this._handleCardClick({name: this._name, link: this._link});
         })
     }
-    _removeEventListeners(){
-        this._element.querySelector('.galery__card-remove').removeEventListener('click', ()=>{ //Удаление карточки
-            this._removeCard();
-        })
-        this._element.querySelector('.galery__card-like').removeEventListener('click',()=>{ //Лайки активны
-            this._onLikeButton();
-        })
-        this._element.querySelector('.galery__card-image').removeEventListener('click',()=>{ //Открытие модального окна карточки
-            this._handleCardClick({name: this._name, link: this._link});
-        })
-    }
     _removeCard() {
         this._element.closest('.galery__card').remove();
-        this._removeEventListeners();
+        this._element = null;
     }
     _onLikeButton() {
         this._element.querySelector('.galery__card-like').classList.toggle('galery__card-like_active');
