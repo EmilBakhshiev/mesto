@@ -2,11 +2,11 @@ import Card from '../components/Card.js';
 import { initialCards } from './initial-сards.js';
 import Validation from '../components/FormValidator.js';
 import { validationConfig } from './validationConfig.js';
-import Popup from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
+import '../pages/index.css';
 
 const editButton = document.querySelector('.profile__button-edit');
 const editPopup = document.querySelector('#edit-popup');
@@ -16,15 +16,23 @@ const addButton = document.querySelector('.profile__button-add');
 const addCardPopup = document.querySelector('#add-card-popup');
 const galeryCardContainer = '.galery';
 const imagePopup = document.querySelector('#image-popup');
-const wrapperPopup = document.querySelector('.root');
 const formAddCard = document.querySelector('#add-card-form');
 const formEditProfile = document.querySelector('#edit-profile-form');
 const inputName = formEditProfile.querySelector('#name');
 const inputAboutMe = formEditProfile.querySelector('#about-me');
 
+function createCard(item, popupSelector, handleCardClick) {
+    const cardInstance = new Card(item, popupSelector, handleCardClick);
+    const card = cardInstance.composeCard();
+    return card;
+}
+
 //Валидация форм
-const addFormValidationForm = new Validation(validationConfig, formAddCard);
-const editProfileFormValidationForm = new Validation(validationConfig, formEditProfile);
+const addFormValidationForm = new Validation(validationConfig, formAddCard); //Валидация формы добавления карточек
+addFormValidationForm.enableValidation();
+
+const editProfileFormValidationForm = new Validation(validationConfig, formEditProfile); //Валидация формы редактирования профиля
+editProfileFormValidationForm.enableValidation();
 
 //Добавление карточек из шаблонаЫ
 const classImagePopup = new PopupWithImage(imagePopup);
@@ -33,9 +41,7 @@ classImagePopup.setEventListeners();
 const section = new Section({
     item: initialCards,
     renderer: (item) => {
-        const card = new Card(item, 'template', (item) => { classImagePopup.open(item) });
-        const cardElements = card.composeCard();
-        section.addItem(cardElements)
+        section.addItem(createCard(item, 'template', (item) => {classImagePopup.open(item)}));
     }
 },
     galeryCardContainer
@@ -44,21 +50,24 @@ const section = new Section({
 section.renderItems();
 
 //Создание нового экземпляра попапов
-const classAddCard = new Popup(addCardPopup); //Модалка Добавление карточек
-classAddCard.setEventListeners();
-
-const editProfile = new Popup(editPopup); //Модалка редактирования профиля
-editProfile.setEventListeners();
-
-
-function closePopupOnOverlay(evt) {
-    const closeButton = evt.target;
-    if (closeButton.classList.contains('popup')) {
-        closeButton.closest('.popup').classList.remove('popup_opened');
+const formAddInstance = new PopupWithForm(addCardPopup, {
+    handleFormSubmit: (formData) => {
+        section.addItem(createCard(formData, 'template', (formData) => {classImagePopup.open(formData)}));
     }
-}
+})
+formAddInstance.setEventListeners();
 
-wrapperPopup.addEventListener('click', closePopupOnOverlay);
+
+const editProfile = new PopupWithForm(editPopup, {
+    handleFormSubmit: (formData) => {
+        userInfo.setUserInfo({
+            newUser: formData.name,
+            newDescription: formData.info
+        })
+    }
+})
+
+editProfile.setEventListeners();
 
 
 //Работа с формой редактирования профиля
@@ -68,9 +77,6 @@ editButton.addEventListener('click', () => { //Обработчик событи
     const infoUser = userInfo.getUserInfo();
     inputName.value = infoUser.userName;
     inputAboutMe.value = infoUser.aboutMe;
-    closePopupOnOverlay;
-    editProfileFormValidationForm.enableValidation();
-
 });
 
 const userInfo = new UserInfo({
@@ -78,30 +84,9 @@ const userInfo = new UserInfo({
     userDescriptionSelector: profileAboutMe
 })
 
-const profileForm = new PopupWithForm(editPopup, {
-    handleFormSubmit: (formData) => {
-        userInfo.setUserInfo({
-            newUser: formData.name,
-            newDescription: formData.info
-        })
-    }
-})
-profileForm.setEventListeners();
-
 // Добавление новых карточек
 
 addButton.addEventListener('click', () => { //Обработчик событий кнопки добавления карточек
-    addFormValidationForm.enableValidation();
-    classAddCard.open();
+    formAddInstance.open();
 })
 
-const formAddInstance = new PopupWithForm(addCardPopup, { 
-    handleFormSubmit: (formData) => {
-        const newCard = new Card(formData, 'template', (formData) => {
-            classImagePopup.open(formData)
-        });
-        const cardElement = newCard.composeCard();
-        section.addItem(cardElement);
-    }
-})
-formAddInstance.setEventListeners();
