@@ -23,7 +23,7 @@ export default class Validation {
             this._hideError(input);
         }
     }
-    _setButtonState(button, isActive) { //Выбирает состояние кнопки
+    setButtonState(button, isActive) { //Выбирает состояние кнопки
         if (isActive) {
             button.classList.remove(this._config.inactiveButtonClass);
             button.disabled = false;
@@ -39,7 +39,7 @@ export default class Validation {
         inputList.forEach(input => {
             input.addEventListener('input', () => {
                 this._checkInputValidity(input);
-                this._setButtonState(submitButton, this._formSelector.checkValidity());
+                this.setButtonState(submitButton, this._formSelector.checkValidity());
             })
         })
     }
@@ -50,7 +50,7 @@ export default class Validation {
             evt.preventDefault()
         });
         const submitButton = this._formSelector.querySelector(this._config.submitButtonSelector);
-        this._setButtonState(submitButton, this._formSelector.checkValidity());
+        this.setButtonState(submitButton, this._formSelector.checkValidity());
 
     }
 }
