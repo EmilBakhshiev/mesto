@@ -4,7 +4,8 @@
   "description": "Проект описывает какими необычными красотами и обладает Россия, которую мы так плохо знаем. Через фотографии пользователей мы хотим показать места, красоту, которых нельзя ставить под сомнения.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rm -rf dist && webpack --mode production",
+    "dev": "webpack serve"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/EmilBakhshiev/mesto/issues"
   },
-  "homepage": "https://github.com/EmilBakhshiev/mesto#readme"
+  "homepage": "https://github.com/EmilBakhshiev/mesto#readme",
+  "devDependencies": {
+    "webpack": "^5.20.1",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  }
 }
