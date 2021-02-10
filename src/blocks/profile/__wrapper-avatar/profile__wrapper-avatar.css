@@ -1,0 +1,22 @@
+.profile__wrapper-avatar {
+    position: relative;
+}
+
+.profile__wrapper-avatar:hover::before {
+    content: '';
+    cursor: pointer;
+    position: absolute;
+    top: 47px;
+    left: 47px;
+    display: block;
+    height: 26px;
+    width: 26px;
+    background-image: url(../../../images/avataEditIcon.png);
+    background-size: cover;
+    background-position: center;
+    z-index: 100;
+}
+
+.profile__wrapper-avatar:hover {
+    opacity: .2;
+}

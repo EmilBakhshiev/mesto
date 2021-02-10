@@ -10,7 +10,8 @@
     cursor: pointer;
     outline-width: 0;
     flex-shrink: 0;
-    transition: .4s ease; 
+    transition: .4s ease;
+    margin-bottom: 3px;
 }
 
 .galery__card-like:hover{

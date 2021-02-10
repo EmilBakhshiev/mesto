@@ -1,4 +1,4 @@
-.profile__button-edit{
+.profile__button-edit {
     width: 24px;
     height: 24px;
     background-color: black;
@@ -7,13 +7,11 @@
     padding: 0;
     box-sizing: border-box;
     align-self: center;
-    /*margin-top: 41.75px;
-    margin-right: auto;*/
     transition: .4s ease;
 }
 
-.profile__button-edit::before{
-    content:'';
+.profile__button-edit::before {
+    content: '';
     position: absolute;
     top: 7px;
     left: 7px;
@@ -25,25 +23,23 @@
     background-position: center;
 }
 
-.profile__button-edit:hover{
+.profile__button-edit:hover {
     opacity: 0.6;
     cursor: pointer;
 }
 
-@media (max-width: 425px){
-    .profile__button-edit{
+@media (max-width: 425px) {
+    .profile__button-edit {
         width: 18px;
         height: 18px;
-    } 
-
-    .profile__button-edit::before{
-        content:'';
+    }
+    .profile__button-edit::before {
+        content: '';
         position: absolute;
         top: 5.25px;
         left: 5.25px;
         display: block;
         height: 7.5px;
         width: 7.5px;
-
     }
 }

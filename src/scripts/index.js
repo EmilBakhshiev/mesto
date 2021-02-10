@@ -7,6 +7,8 @@ import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import '../pages/index.css';
+import Api from '../components/Api.js';
+import Popup from '../components/Popup.js';
 
 const editButton = document.querySelector('.profile__button-edit');
 const editPopup = document.querySelector('#edit-popup');
@@ -20,6 +22,19 @@ const formAddCard = document.querySelector('#add-card-form');
 const formEditProfile = document.querySelector('#edit-profile-form');
 const inputName = formEditProfile.querySelector('#name');
 const inputAboutMe = formEditProfile.querySelector('#about-me');
+const deleteCardPopup = document.querySelector('#delete-card-popup');
+const deleteCardForm = document.querySelector('#delete-card-form');
+
+const api = new Api({
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-20',
+    headers: {
+        authorization: '204a3dbb-e697-4073-846c-574c3a07e2d3',
+        'Content-Type': 'application/json'
+    }
+})
+api.getProfileInfo()
+
+
 
 function createCard(item, popupSelector, handleCardClick) {
     const cardInstance = new Card(item, popupSelector, handleCardClick);
@@ -39,11 +54,11 @@ const classImagePopup = new PopupWithImage(imagePopup);
 classImagePopup.setEventListeners();
 
 const section = new Section({
-    item: initialCards,
-    renderer: (item) => {
-        section.addItem(createCard(item, 'template', (item) => {classImagePopup.open(item)}));
-    }
-},
+        item: initialCards,
+        renderer: (item) => {
+            section.addItem(createCard(item, 'template', (item) => { classImagePopup.open(item) }));
+        }
+    },
     galeryCardContainer
 );
 
@@ -52,7 +67,7 @@ section.renderItems();
 //Создание нового экземпляра попапов
 const formAddInstance = new PopupWithForm(addCardPopup, {
     handleFormSubmit: (formData) => {
-        section.addItem(createCard(formData, 'template', (formData) => {classImagePopup.open(formData)}));
+        section.addItem(createCard(formData, 'template', (formData) => { classImagePopup.open(formData) }));
     }
 })
 formAddInstance.setEventListeners();
@@ -69,6 +84,8 @@ const editProfile = new PopupWithForm(editPopup, {
 
 editProfile.setEventListeners();
 
+const deletePopupInstance = new Popup(deleteCardPopup);
+deletePopupInstance.setEventListeners();
 
 //Работа с формой редактирования профиля
 
@@ -90,3 +107,35 @@ addButton.addEventListener('click', () => { //Обработчик событи�
     formAddInstance.open();
 })
 
+/*
+fetch('https://mesto.nomoreparties.co/v1/cohort-20/cards', {
+  headers: {
+    authorization: '204a3dbb-e697-4073-846c-574c3a07e2d3'
+  }
+})
+  .then(res => res.json())
+  .then((result) => {
+    console.log(result);
+  }); 
+
+
+fetch('https://mesto.nomoreparties.co/v1/cohort-20/users/me',{
+    headers: {
+        authorization: '204a3dbb-e697-4073-846c-574c3a07e2d3'
+      }
+})
+.then(res => res.json())
+  .then((result) => {
+    profileName.textContent = result.name;
+  });
+
+
+  fetch('https://mesto.nomoreparties.co/v1/cohort-20/cards',{
+    headers: {
+        authorization: '204a3dbb-e697-4073-846c-574c3a07e2d3'
+      }
+})
+.then(res => res.json())
+  .then((result) => {
+    console.log(result);
+  });*/
