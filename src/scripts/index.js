@@ -10,6 +10,8 @@ import '../pages/index.css';
 import Api from '../components/Api.js';
 import Popup from '../components/Popup.js';
 
+const avatar = document.querySelector('.profile__avatar');
+const editAvatarPopup = document.querySelector('#avatar-popup');
 const editButton = document.querySelector('.profile__button-edit');
 const editPopup = document.querySelector('#edit-popup');
 const profileName = document.querySelector('.profile__name');
@@ -22,10 +24,8 @@ const formAddCard = document.querySelector('#add-card-form');
 const formEditProfile = document.querySelector('#edit-profile-form');
 const inputName = formEditProfile.querySelector('#name');
 const inputAboutMe = formEditProfile.querySelector('#about-me');
-<<<<<<< HEAD
 const deleteCardPopup = document.querySelector('#delete-card-popup');
 const deleteCardForm = document.querySelector('#delete-card-form');
-
 const api = new Api({
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-20',
     headers: {
@@ -33,12 +33,28 @@ const api = new Api({
         'Content-Type': 'application/json'
     }
 })
+
 api.getProfileInfo()
+.then((result)=>{
+  profileName.textContent = result.name;
+  profileAboutMe.textContent = result.about;
+  avatar.src = result.avatar;
+})
 
+api.getInitialCards()
+.then((res)=>{
+  const section = new Section({
+    item: res,
+    renderer: (res) => {
+        section.addItem(createCard(res, 'template', (res) => { classImagePopup.open(res) }));
+    }
+},
+galeryCardContainer
+);
 
-=======
-const submitButtonAddCard = formAddCard.querySelector('.popup__button');
->>>>>>> 3143feee9134c595d5b556acbe75efaedeac1e40
+section.renderItems();
+})
+api.editProfile();
 
 function createCard(item, popupSelector, handleCardClick) {
     const cardInstance = new Card(item, popupSelector, handleCardClick);
@@ -57,16 +73,7 @@ editProfileFormValidationForm.enableValidation();
 const classImagePopup = new PopupWithImage(imagePopup);
 classImagePopup.setEventListeners();
 
-const section = new Section({
-        item: initialCards,
-        renderer: (item) => {
-            section.addItem(createCard(item, 'template', (item) => { classImagePopup.open(item) }));
-        }
-    },
-    galeryCardContainer
-);
 
-section.renderItems();
 
 //Создание нового экземпляра попапов
 const formAddInstance = new PopupWithForm(addCardPopup, {
@@ -85,8 +92,19 @@ const editProfile = new PopupWithForm(editPopup, {
         })
     }
 })
-
 editProfile.setEventListeners();
+
+const avatarInstance = new PopupWithForm(editAvatarPopup,{
+  handleFormSubmit: (formData) =>{
+    avatar.src = formData.link;
+    console.log(formData);
+  }
+})
+avatarInstance.setEventListeners();
+
+avatar.addEventListener('click', ()=>{
+  avatarInstance.open();
+})
 
 const deletePopupInstance = new Popup(deleteCardPopup);
 deletePopupInstance.setEventListeners();
