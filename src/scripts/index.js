@@ -22,6 +22,7 @@ const formAddCard = document.querySelector('#add-card-form');
 const formEditProfile = document.querySelector('#edit-profile-form');
 const inputName = formEditProfile.querySelector('#name');
 const inputAboutMe = formEditProfile.querySelector('#about-me');
+<<<<<<< HEAD
 const deleteCardPopup = document.querySelector('#delete-card-popup');
 const deleteCardForm = document.querySelector('#delete-card-form');
 
@@ -35,6 +36,9 @@ const api = new Api({
 api.getProfileInfo()
 
 
+=======
+const submitButtonAddCard = formAddCard.querySelector('.popup__button');
+>>>>>>> 3143feee9134c595d5b556acbe75efaedeac1e40
 
 function createCard(item, popupSelector, handleCardClick) {
     const cardInstance = new Card(item, popupSelector, handleCardClick);
@@ -104,6 +108,7 @@ const userInfo = new UserInfo({
 // Добавление новых карточек
 
 addButton.addEventListener('click', () => { //Обработчик событий кнопки добавления карточек
+    addFormValidationForm.setButtonState(submitButtonAddCard, formAddCard.checkValidity());
     formAddInstance.open();
 })
 
