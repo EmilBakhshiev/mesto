@@ -1,40 +1,42 @@
-export default class Card{
-    constructor(data, cardSelector, handleCardClick){
+export default class Card {
+    constructor(data, cardSelector, handleCardClick) {
         this._name = data.name;
-		this._link = data.link;
+        this._link = data.link;
         this._cardSelector = cardSelector;
         this._handleCardClick = handleCardClick;
-        
+        this._likes = data.likes.length
+
     }
-    _getTemplate(){
+    _getTemplate() {
         const newCard = document
-        .querySelector(this._cardSelector)
-        .content
-        .querySelector('.galery__card')
-        .cloneNode(true);
+            .querySelector(this._cardSelector)
+            .content
+            .querySelector('.galery__card')
+            .cloneNode(true);
 
         return newCard;
     }
-    composeCard () {
+    composeCard() {
         this._element = this._getTemplate();
         this._setEventListeners();
         this._element.querySelector('.galery__card-title').textContent = this._name;
         const cardImage = this._element.querySelector('.galery__card-image');
         cardImage.src = this._link;
         cardImage.alt = this._name;
-        
+        this._element.querySelector('.galery__card-like-number').textContent = this._likes;
+
         return this._element;
     }
-   
-    _setEventListeners(){
-        this._element.querySelector('.galery__card-remove').addEventListener('click', ()=>{ //Удаление карточки
+
+    _setEventListeners() {
+        this._element.querySelector('.galery__card-remove').addEventListener('click', () => { //Удаление карточки
             this._removeCard();
         })
-        this._element.querySelector('.galery__card-like').addEventListener('click',()=>{ //Лайки активны
+        this._element.querySelector('.galery__card-like').addEventListener('click', () => { //Лайки активны
             this._onLikeButton();
         })
-        this._element.querySelector('.galery__card-image').addEventListener('click',()=>{ //Открытие модального окна карточки
-            this._handleCardClick({name: this._name, link: this._link});
+        this._element.querySelector('.galery__card-image').addEventListener('click', () => { //Открытие модального окна карточки
+            this._handleCardClick({ name: this._name, link: this._link });
         })
     }
     _removeCard() {
@@ -44,5 +46,5 @@ export default class Card{
     _onLikeButton() {
         this._element.querySelector('.galery__card-like').classList.toggle('galery__card-like_active');
     }
-    
+
 }
