@@ -29,12 +29,13 @@ const deleteCardForm = document.querySelector('#delete-card-form');
 const submitButtonAddCard = formAddCard.querySelector('.popup__button');
 
 const api = new Api({
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-20',
+    url: 'https://mesto.nomoreparties.co/v1/cohort-20/',
     headers: {
         authorization: '204a3dbb-e697-4073-846c-574c3a07e2d3',
         'Content-Type': 'application/json'
     }
 })
+
 
 api.getProfileInfo()
     .then((result) => {
@@ -43,18 +44,21 @@ api.getProfileInfo()
         avatar.src = result.avatar;
     })
 
+
 api.getInitialCards()
     .then((res) => {
-        const section = new Section({
-                item: res,
-                renderer: (item) => {
-                    section.addItem(createCard(item, 'template', (item) => { classImagePopup.open(item) }));
-                }
-            },
-            galeryCardContainer
-        )
-        section.renderItems();
-    });
+        section.renderItems(res);
+    })
+
+
+
+const section = new Section({
+        renderer: (item) => {
+            section.addItem(createCard(item, 'template', (item) => { classImagePopup.open(item) }));
+        }
+    },
+    galeryCardContainer
+)
 
 
 function createCard(item, popupSelector, handleCardClick) {
@@ -81,8 +85,11 @@ const formAddInstance = new PopupWithForm(addCardPopup, {
     handleFormSubmit: (formData) => {
         api.postCard(formData)
             .then((formData) => {
-                galeryCardContainer.prepend(createCard(formData, 'template', (formData) => { classImagePopup.open(formData) }))
+                section.addItem(createCard(formData, 'template', (formData) => { classImagePopup.open(formData) }));
             })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 })
 
@@ -91,11 +98,16 @@ formAddInstance.setEventListeners();
 
 const editProfile = new PopupWithForm(editPopup, {
     handleFormSubmit: (formData) => {
-        userInfo.setUserInfo({
-            newUser: formData.name,
-            newDescription: formData.info
-        })
         api.editProfile(formData)
+            .then((formData) => {
+                userInfo.setUserInfo({
+                    newUser: formData.name,
+                    newDescription: formData.about
+                })
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 })
 

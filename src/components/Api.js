@@ -1,12 +1,25 @@
 export default class Api {
-    constructor(options) {
-        this.options = options
+    constructor({ url, headers }) {
+        this._url = url;
+        this._headers = headers
     }
     getInitialCards() {
-        return fetch('https://mesto.nomoreparties.co/v1/cohort-20/cards', {
-                headers: {
-                    authorization: '204a3dbb-e697-4073-846c-574c3a07e2d3'
+        return fetch(`${this._url}cards`, {
+                headers: this._headers
+            })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
                 }
+                return Promise.reject(`Ошибка: ${res.status}`);
+            })
+            .then((result) => {
+                return result;
+            });
+    }
+    getProfileInfo() {
+        return fetch(`${this._url}users/me`, {
+                headers: this._headers
             })
             .then(res => {
                 if (res.ok) {
@@ -17,47 +30,23 @@ export default class Api {
             .then((result) => {
                 console.log(result);
                 return result;
-            });
+            })
+
     }
-    getProfileInfo() {
-        return fetch('https://mesto.nomoreparties.co/v1/cohort-20/users/me', {
-                headers: {
-                    authorization: '204a3dbb-e697-4073-846c-574c3a07e2d3'
-                }
-            })
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            })
-            .then((result) => {
-                return result;
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }
-    editProfile() {
-        return fetch('https://mesto.nomoreparties.co/v1/cohort-20/users/me', {
+    editProfile(formData) {
+        return fetch(`${this._url}users/me`, {
             method: 'PATCH',
-            headers: {
-                authorization: '204a3dbb-e697-4073-846c-574c3a07e2d3',
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers,
             body: JSON.stringify({
-                name: document.querySelector('.profile__name').textContent,
-                about: document.querySelector('.profile__description').textContent
+                name: formData.name,
+                about: formData.about
             })
         })
     }
     postCard(newCard) {
-        return fetch('https://mesto.nomoreparties.co/v1/cohort-20/cards', {
+        return fetch(`${this._url}cards`, {
                 method: 'POST',
-                headers: {
-                    authorization: '204a3dbb-e697-4073-846c-574c3a07e2d3',
-                    'Content-Type': 'application/json; charset=UTF-8'
-                },
+                headers: this._headers,
                 body: JSON.stringify({
                     name: newCard.name,
                     link: newCard.link
@@ -69,8 +58,17 @@ export default class Api {
                 }
                 return Promise.reject(`Ошибка: ${res.status}`);
             })
-            .catch((err) => {
-                console.log(err);
-            });
+    }
+    removeCard(id) {
+        return fetch(`${this._url}${id}`, {
+                method: "DELETE",
+                headers: this._headers,
+            })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка: ${res.status}`);
+            })
     }
 }
