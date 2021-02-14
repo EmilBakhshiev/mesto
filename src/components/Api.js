@@ -14,6 +14,7 @@ export default class Api {
                 return Promise.reject(`Ошибка: ${res.status}`);
             })
             .then((result) => {
+                console.log(result);
                 return result;
             });
     }
@@ -42,6 +43,12 @@ export default class Api {
                 about: formData.about
             })
         })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        })
     }
     postCard(newCard) {
         return fetch(`${this._url}cards`, {
@@ -60,7 +67,7 @@ export default class Api {
             })
     }
     removeCard(id) {
-        return fetch(`${this._url}${id}`, {
+        return fetch(`${this._url}cards/${id}`, {
                 method: "DELETE",
                 headers: this._headers,
             })
@@ -70,5 +77,45 @@ export default class Api {
                 }
                 return Promise.reject(`Ошибка: ${res.status}`);
             })
+    }
+    putLike(id){
+        return fetch(`${this._url}cards/likes/${id}`, {
+            method: "PUT",
+            headers: this._headers,
+        })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        })
+    }
+    deleteLike(id){
+        return fetch(`${this._url}cards/likes/${id}`, {
+            method: "DELETE",
+            headers: this._headers,
+        })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        })
+    }
+    updateAvatar(linkAvatar){
+        return fetch(`${this._url}users/me/avatar`, {
+            method: 'PATCH',
+            headers: this._headers,
+            body: JSON.stringify({
+                avatar: linkAvatar.link
+            })
+        })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        })
+       
     }
 }

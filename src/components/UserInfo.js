@@ -1,8 +1,8 @@
 export default class UserInfo {
-    constructor({ userNameSelector, userDescriptionSelector }) {
+    constructor(userNameSelector, userDescriptionSelector, avatar) {
         this._userName = userNameSelector;
         this._userDescription = userDescriptionSelector;
-        this
+        this._avatar = avatar;
     }
     getUserInfo() {
         const userName = this._userName.textContent;
@@ -14,7 +14,11 @@ export default class UserInfo {
         this._userDescription.textContent = newDescription;
     }
     updateUserInfo = () => {
-        //  this._userName.textContent = 
+        this._userName.textContent = userNameSelector;
+        this._userDescription.textContent = userDescriptionSelector;
+    }
+    updateAvatar(avatarValue){
+       this._avatar.src = avatarValue;
     }
 
 }

@@ -22,10 +22,22 @@ setEventListeners(){
         evt.preventDefault();
         this._handleFormSubmit(this._getInputValues());
         this.close();
+
 })
 }
 close(){
     super.close();
     this._form.reset();
-}
+}/*
+renderLoading(isLoading){
+    const loadButton = this._form.querySelector('#load-button');
+    const submitButton = this._form.querySelector('.popup__button');
+    if(isLoading){
+        submitButton.classList.add('popup__hide-button');
+        loadButton.classList.remove('popup__hide-button');
+    }else{
+        submitButton.classList.remove('popup__hide-button');
+        loadButton.classList.add('popup__hide-button');
+    }
+}*/
 }

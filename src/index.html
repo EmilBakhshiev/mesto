@@ -14,7 +14,7 @@
     <main class="content">
         <section class="profile">
             <div class="profile__wrapper-avatar">
-                <img src="<%=require('./images/avatar.jpg')%>" alt="Профиль" class="profile__avatar">
+                <img src= "https://placeholder.com/" alt="Профиль" class="profile__avatar">
             </div>
             <div class="profile__wrapper">
                 <div class="profile__wrapper-text">
@@ -56,6 +56,7 @@
                 <input type="text" class="popup__input" name="about" id="about-me" required minlength="2" maxlength="200">
                 <span id="about-me-error" class="error"></span>
                 <button class="popup__save-button popup__button" type="submit">Сохранить</button>
+            
                 <button class="popup__close-button" type="button" id="close-edit-popup"></button>
             </form>
         </div>
@@ -81,7 +82,7 @@
             <form class="popup__container" name="avatar-form" id="avatar-form" novalidate>
                 <h2 class="popup__title">Обновить аватар</h2>
                 <input type="url" class="popup__input" name="link" id="avatar-link" placeholder="Название" required>
-                <span id="place-name-error" class="error"></span>
+                <span id="avatar-link-error" class="error"></span>
                 <button class="popup__button popup__create-button" type="submit">Сохранить</button>
                 <button class="popup__close-button" type="button" id="close-avatar-popup"></button>
             </form>
