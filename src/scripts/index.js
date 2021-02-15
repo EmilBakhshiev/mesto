@@ -11,7 +11,7 @@ import DeletePopup from '../components/DeletePopup.js'
 
 const avatar = document.querySelector('.profile__avatar');
 const editAvatarPopup = document.querySelector('#avatar-popup');
-const avatarForm =  document.querySelector('#avatar-form');
+const avatarForm = document.querySelector('#avatar-form');
 const updateAvatarButton = avatarForm.querySelector('.popup__create-button');
 const editButton = document.querySelector('.profile__button-edit');
 const editPopup = document.querySelector('#edit-popup');
@@ -28,9 +28,10 @@ const inputAboutMe = formEditProfile.querySelector('#about-me');
 const deleteCardPopup = document.querySelector('#delete-card-popup');
 const submitButtonAddCard = formAddCard.querySelector('.popup__button');
 
-
-
 let userId = null;
+let tamplateCard = null;
+
+
 const api = new Api({
     url: 'https://mesto.nomoreparties.co/v1/cohort-20/',
     headers: {
@@ -66,12 +67,16 @@ const section = new Section({
 
 
 function createCard(item) { //Создание экземпляра класса Card
-    const cardInstance = new Card(
-        {...item, userId},
-         'template',
-          (item) => { classImagePopup.open(item) },
-           api,
-           () => {deletePopupInstance.open()});
+    const cardInstance = new Card({...item, userId },
+        'template',
+        (item) => { classImagePopup.open(item) },
+        api, {
+            handleDeleteClick: (item) => {
+                deletePopupInstance.open(item);
+                tamplateCard = cardInstance;
+
+            }
+        });
     const card = cardInstance.composeCard();
     return card;
 }
@@ -122,7 +127,7 @@ const editProfile = new PopupWithForm(editPopup, {
             .catch((err) => {
                 console.log(err);
             })
-           
+
     }
 })
 
@@ -131,10 +136,10 @@ editProfile.setEventListeners();
 const avatarInstance = new PopupWithForm(editAvatarPopup, {
     handleFormSubmit: (formData) => {
         api.updateAvatar(formData)
-        .then((formData) =>{
-            avatar.src = formData.avatar;
-        })
-        
+            .then((formData) => {
+                avatar.src = formData.avatar;
+            })
+
     }
 })
 avatarInstance.setEventListeners();
@@ -144,7 +149,17 @@ avatar.addEventListener('click', () => {
     avatarInstance.open();
 })
 
-const deletePopupInstance = new DeletePopup(deleteCardPopup, api);
+const deletePopupInstance = new DeletePopup(deleteCardPopup, {
+    handleFormSubmit: (data) => {
+        api.removeCard(data)
+            .then(() => {
+                tamplateCard.remove();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+});;
 deletePopupInstance.setEventListeners();
 
 //Работа с формой редактирования профиля
@@ -161,12 +176,12 @@ const userInfo = new UserInfo(profileName, profileAboutMe, avatar);
 // Добавление новых карточек
 
 addButton.addEventListener('click', () => { //Обработчик событий кнопки добавления карточек
-    addFormValidationForm.setButtonState(submitButtonAddCard, formAddCard.checkValidity());
-    formAddInstance.open();
-})
-/*
-function renderLoading(isLoading, element){
-    if(isLoading){
-        element.textContent = "Сохранение..."
-    }
-}*/
+        addFormValidationForm.setButtonState(submitButtonAddCard, formAddCard.checkValidity());
+        formAddInstance.open();
+    })
+    /*
+    function renderLoading(isLoading, element){
+        if(isLoading){
+            element.textContent = "Сохранение..."
+        }
+    }*/
