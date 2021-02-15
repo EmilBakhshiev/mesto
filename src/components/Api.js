@@ -14,7 +14,6 @@ export default class Api {
                 return Promise.reject(`Ошибка: ${res.status}`);
             })
             .then((result) => {
-                console.log(result);
                 return result;
             });
     }
@@ -29,7 +28,6 @@ export default class Api {
                 return Promise.reject(`Ошибка: ${res.status}`);
             })
             .then((result) => {
-                console.log(result);
                 return result;
             })
 
@@ -66,8 +64,8 @@ export default class Api {
                 return Promise.reject(`Ошибка: ${res.status}`);
             })
     }
-    removeCard(id) {
-        return fetch(`${this._url}cards/${id}`, {
+    removeCard(item) {
+        return fetch(`${this._url}cards/${item._id}`, {
                 method: "DELETE",
                 headers: this._headers,
             })

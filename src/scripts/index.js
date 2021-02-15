@@ -27,7 +27,7 @@ const inputName = formEditProfile.querySelector('#name');
 const inputAboutMe = formEditProfile.querySelector('#about-me');
 const deleteCardPopup = document.querySelector('#delete-card-popup');
 const submitButtonAddCard = formAddCard.querySelector('.popup__button');
-
+const editAvatarButton = document.querySelector('.profile__edit-avatar');
 let userId = null;
 let tamplateCard = null;
 
@@ -44,39 +44,54 @@ const api = new Api({
 api.getProfileInfo()
     .then((result) => {
         userId = result._id;
-        profileName.textContent = result.name;
-        profileAboutMe.textContent = result.about;
-        avatar.src = result.avatar;
+        userInfo.setUserInfo(result);
+        userInfo.setAvatar(result);
     })
+    .catch((err) => {
+        console.log(err);
+      });
 
 
 api.getInitialCards()
     .then((res) => {
         section.renderItems(res);
     })
+    .catch((err) => {
+        console.log(err);
+      });
 
 
 
 const section = new Section({
-        renderer: (item) => {
-            section.addItem(createCard(item));
-        }
-    },
+    renderer: (item) => {
+        section.addItem(createCard(item));
+    }
+},
     galeryCardContainer
 )
-
+const deletePopupInstance = new DeletePopup(deleteCardPopup, {
+    handleFormSubmit: (data) => {
+        api.removeCard(data)
+            .then(() => {
+                tamplateCard.remove();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+});
+deletePopupInstance.setEventListeners();
 
 function createCard(item) { //Создание экземпляра класса Card
-    const cardInstance = new Card({...item, userId },
+    const cardInstance = new Card({ ...item, userId },
         'template',
         (item) => { classImagePopup.open(item) },
         api, {
-            handleDeleteClick: (item) => {
-                deletePopupInstance.open(item);
-                tamplateCard = cardInstance;
-
-            }
-        });
+        handleDeleteClick: (item) => {
+            deletePopupInstance.open(item);
+            tamplateCard = card;
+        }
+    });
     const card = cardInstance.composeCard();
     return card;
 }
@@ -101,12 +116,16 @@ classImagePopup.setEventListeners();
 //Создание нового экземпляра попапов
 const formAddInstance = new PopupWithForm(addCardPopup, {
     handleFormSubmit: (formData) => {
+        formAddInstance.renderLoading(false);
         api.postCard(formData)
             .then((formData) => {
                 section.addItem(createCard(formData));
             })
             .catch((err) => {
                 console.log(err);
+            })
+            .finally(() => {
+                formAddInstance.renderLoading(true);
             })
     }
 })
@@ -116,18 +135,17 @@ formAddInstance.setEventListeners();
 
 const editProfile = new PopupWithForm(editPopup, {
     handleFormSubmit: (formData) => {
+        editProfile.renderLoading(false);
         api.editProfile(formData)
             .then((formData) => {
-                userInfo.setUserInfo({
-                    newUser: formData.name,
-                    newDescription: formData.about
-                })
-                userInfo.updateUserInfo();
+                userInfo.setUserInfo(formData);
             })
             .catch((err) => {
                 console.log(err);
             })
-
+            .finally(() => {
+                editProfile.renderLoading(true);
+            })
     }
 })
 
@@ -135,34 +153,25 @@ editProfile.setEventListeners();
 
 const avatarInstance = new PopupWithForm(editAvatarPopup, {
     handleFormSubmit: (formData) => {
+        avatarInstance.renderLoading(false);
         api.updateAvatar(formData)
             .then((formData) => {
-                avatar.src = formData.avatar;
+                userInfo.setAvatar(formData);
             })
-
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                avatarInstance.renderLoading(true);
+            })
     }
 })
 avatarInstance.setEventListeners();
 
-avatar.addEventListener('click', () => {
+editAvatarButton.addEventListener('click', () => {
     avatarFormValidation.setButtonState(updateAvatarButton, avatarForm.checkValidity());
     avatarInstance.open();
 })
-
-const deletePopupInstance = new DeletePopup(deleteCardPopup, {
-    handleFormSubmit: (data) => {
-        api.removeCard(data)
-            .then(() => {
-                tamplateCard.remove();
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }
-});;
-deletePopupInstance.setEventListeners();
-
-//Работа с формой редактирования профиля
 
 editButton.addEventListener('click', () => { //Обработчик событий кнопки редактирования профиля
     editProfile.open();
@@ -173,15 +182,9 @@ editButton.addEventListener('click', () => { //Обработчик событи
 
 const userInfo = new UserInfo(profileName, profileAboutMe, avatar);
 
-// Добавление новых карточек
+
 
 addButton.addEventListener('click', () => { //Обработчик событий кнопки добавления карточек
-        addFormValidationForm.setButtonState(submitButtonAddCard, formAddCard.checkValidity());
-        formAddInstance.open();
-    })
-    /*
-    function renderLoading(isLoading, element){
-        if(isLoading){
-            element.textContent = "Сохранение..."
-        }
-    }*/
+    addFormValidationForm.setButtonState(submitButtonAddCard, formAddCard.checkValidity());
+    formAddInstance.open();
+})

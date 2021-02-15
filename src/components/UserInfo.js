@@ -9,16 +9,13 @@ export default class UserInfo {
         const aboutMe = this._userDescription.textContent;
         return { userName: userName, aboutMe: aboutMe };
     }
-    setUserInfo = ({ newUser, newDescription }) => {
-        this._userName.textContent = newUser;
-        this._userDescription.textContent = newDescription;
+    setUserInfo(data) {
+        this._userName.textContent = data.name;
+        this._userDescription.textContent = data.about;
     }
-    updateUserInfo = () => {
-        this._userName.textContent = userNameSelector;
-        this._userDescription.textContent = userDescriptionSelector;
-    }
-    updateAvatar(avatarValue){
-       this._avatar.src = avatarValue;
+
+    setAvatar(data){
+       this._avatar.src = data.avatar;
     }
 
 }

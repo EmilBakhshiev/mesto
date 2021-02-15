@@ -1,5 +1,6 @@
 export default class Card {
     constructor(data, cardSelector, handleCardClick, api, { handleDeleteClick }) {
+        this._data = data;
         this._name = data.name;
         this._link = data.link;
         this._userId = data.userId;
@@ -37,13 +38,18 @@ export default class Card {
     }
 
     _setEventListeners() {
-        this._element.querySelector('.galery__card-remove').addEventListener('click', () => { this._handleDeleteClick(this._data) });
+        this._element.querySelector('.galery__card-remove').addEventListener('click', () => {
+            this._handleDeleteClick(this._data);
+            
+        });
 
         this._likeIсon.addEventListener('click', () => { //Лайки активны
             if (this._likeIсon.classList.contains('galery__card-like_active')) {
                 this._deleteLikeCLick();
+                this._offLike();
             } else {
                 this._handleLikeClick();
+                this._onLike();
             }
         })
         this._element.querySelector('.galery__card-image').addEventListener('click', () => { //Открытие модального окна карточки
@@ -54,7 +60,12 @@ export default class Card {
         this._element.closest('.galery__card').remove();
         this._element = null;
     }
-
+    _onLike() {
+        this._likeIсon.classList.add('galery__card-like_active');
+    }
+    _offLike() {
+        this._likeIсon.classList.remove('galery__card-like_active'); 
+    }
     _notMyBasket() {
         if (this._idOwner !== this._userId) {
             this._element.querySelector('.galery__card-remove').remove();
@@ -63,34 +74,25 @@ export default class Card {
     _handleLikeClick() {
         this._api
             .putLike(this._id)
-            .then(() => {
-                this._likes += 1
+            .then((res) => {
+                this._likes = res.likes.length;
                 this._likeNumber.textContent = this._likes;
             })
-        this._likeIсon.classList.add('galery__card-like_active');
     }
     _deleteLikeCLick() {
         this._api
             .deleteLike(this._id)
-            .then(() => {
-                this._likes -= 1
+            .then((res) => {
+                this._likes = res.likes.length;
                 this._likeNumber.textContent = this._likes;
             })
-        this._likeIсon.classList.remove('galery__card-like_active');
     }
     findMyLike() {
         return Boolean(this.likeId.find((obj => obj._id == this._userId)));
     }
     myLikeOnCard(myLike) {
-            if (myLike) {
-                this._onLikeButton();
-            }
+        if (myLike) {
+            this._onLike();
         }
-        /*
-         _deleteClick = () => {
-            this._api
-              .removeCard(this._id)
-              .then(()=> this._removeCard())
-              .catch((err)=> console.log(err))
-          }*/
+    }
 }
