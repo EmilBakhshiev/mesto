@@ -36,6 +36,12 @@ export default class Validation {
     _setEventListener() {
         const inputList = this._formSelector.querySelectorAll(this._config.inputSelector);
         const submitButton = this._formSelector.querySelector(this._config.submitButtonSelector);
+        this._formSelector.addEventListener('reset', () => {
+            inputList.forEach((inputElement) => {
+                this._hideError(inputElement)
+                this.setButtonState(submitButton, false);
+            })
+        });
         inputList.forEach(input => {
             input.addEventListener('input', () => {
                 this._checkInputValidity(input);
